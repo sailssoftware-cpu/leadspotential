@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sails Software — Qualified Lead Intelligence Report</title>
+<style>
+  :root {
+    --navy: #0f2044;
+    --navy-mid: #162b58;
+    --navy-light: #1e3a70;
+    --blue: #0073e6;
+    --blue-light: #1a8aff;
+    --blue-pale: #e8f3ff;
+    --hot: #c0392b;
+    --hot-bg: #fdf0ef;
+    --hot-border: #e74c3c;
+    --warm: #d35400;
+    --warm-bg: #fef5ec;
+    --warm-border: #e67e22;
+    --white: #ffffff;
+    --off-white: #f8f9fc;
+    --rule: #dde3ed;
+    --text: #1a2540;
+    --muted: #6b7a99;
+    --tag-bg: #eef4fd;
+    --tag-text: #0055b3;
+    --font-display: 'Georgia', 'Times New Roman', serif;
+    --font-body: -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'Courier New', 'Lucida Console', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--off-white);
+    color: var(--text);
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────── */
+  .report-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.025) 60px,
+        rgba(255,255,255,0.025) 61px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.025) 60px,
+        rgba(255,255,255,0.025) 61px
+      );
+    pointer-events: none;
+  }
+  .report-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blue), #00c6ff, var(--blue));
+  }
+
+  .header-inner {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 42px 48px 38px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .header-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .brand-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #7ba8e0;
+    border-left: 3px solid var(--blue);
+    padding-left: 10px;
+  }
+
+  .brand-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: normal;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+    color: var(--white);
+  }
+
+  .brand-title span {
+    color: #5ab4ff;
+  }
+
+  .brand-subtitle {
+    font-size: 13px;
+    color: #9ab8da;
+    margin-top: 4px;
+    letter-spacing: 0.01em;
+  }
+
+  .header-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .meta-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #7ba8e0;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .meta-badge {
+    margin-top: 10px;
+    display: inline-block;
+    background: rgba(0,115,230,0.25);
+    border: 1px solid rgba(0,115,230,0.5);
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: #8ecfff;
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .meta-stats {
+    margin-top: 14px;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--white);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: #7ba8e0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+
+  /* ── BODY WRAPPER ────────────────────────────────────── */
+  .report-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 48px 60px;
+  }
+
+  /* ── EXEC SUMMARY ────────────────────────────────────── */
+  .exec-summary {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--blue);
+    border-radius: 0 0 6px 6px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .summary-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue);
+    padding-top: 2px;
+  }
+
+  .summary-text {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  /* ── LEGEND ──────────────────────────────────────────── */
+  .legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  .tier-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tier-dot.t1 { background: var(--hot); box-shadow: 0 0 0 3px rgba(192,57,43,0.2); }
+  .tier-dot.t2 { background: var(--warm); box-shadow: 0 0 0 3px rgba(211,84,0,0.2); }
+  .tier-dot.t3 { background: #27ae60; box-shadow: 0 0 0 3px rgba(39,174,96,0.2); }
+
+  .legend-label { font-weight: 600; color: var(--text); }
+  .legend-desc { color: var(--muted); }
+
+  /* ── SECTION ─────────────────────────────────────────── */
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--navy);
+  }
+
+  .section-letter {
+    width: 32px;
+    height: 32px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: normal;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    color: var(--navy);
+    font-weight: normal;
+    letter-spacing: -0.2px;
+  }
+
+  .section-count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── LEAD TABLE ──────────────────────────────────────── */
+  .lead-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .lead-table thead tr {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .lead-table thead th {
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: normal;
+    text-align: left;
+    color: #9ab8da;
+    white-space: nowrap;
+  }
+
+  .lead-table tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s;
+  }
+
+  .lead-table tbody tr:nth-child(even) {
+    background: #fafbfd;
+  }
+
+  .lead-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .lead-table tbody tr:hover {
+    background: var(--blue-pale);
+  }
+
+  .lead-table td {
+    padding: 13px 14px;
+    vertical-align: top;
+    font-size: 12.5px;
+  }
+
+  /* Company column */
+  .company-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  .company-ticker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--blue);
+    background: var(--blue-pale);
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .company-hq {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .company-headcount {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Tier badge */
+  .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .tier-badge.t1 {
+    background: var(--hot-bg);
+    color: var(--hot);
+    border: 1px solid #f5c6c2;
+  }
+
+  .tier-badge.t2 {
+    background: var(--warm-bg);
+    color: var(--warm);
+    border: 1px solid #f5d5b0;
+  }
+
+  .tier-badge.t1::before { content: '●'; font-size: 8px; }
+  .tier-badge.t2::before { content: '◉'; font-size: 8px; }
+
+  /* Urgency */
+  .urgency-text {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* Service tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .tag {
+    font-size: 10.5px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border-radius: 3px;
+    padding: 2px 7px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  .tag.product {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+  }
+
+  /* Links */
+  .li-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border: 1px solid #b3d4f5;
+    border-radius: 4px;
+    background: var(--blue-pale);
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .li-link:hover {
+    background: var(--blue);
+    color: var(--white);
+    border-color: var(--blue);
+  }
+
+  .li-link::before {
+    content: 'in';
+    font-weight: 800;
+    font-size: 10px;
+    font-family: var(--font-display);
+  }
+
+  /* Contact */
+  .contact-text {
+    font-size: 11.5px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .contact-named {
+    font-weight: 600;
+    color: var(--navy);
+    display: block;
+  }
+
+  .contact-title {
+    font-size: 10.5px;
+    color: var(--muted);
+  }
+
+  /* ── PLAYBOOK ─────────────────────────────────────────── */
+  .playbook {
+    margin-top: 48px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--navy);
+    border-radius: 0 0 8px 8px;
+    padding: 32px 36px;
+  }
+
+  .playbook-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--navy);
+    margin-bottom: 6px;
+    font-weight: normal;
+  }
+
+  .playbook-subtitle {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .playbook-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .playbook-card {
+    background: var(--off-white);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 18px 20px;
+  }
+
+  .playbook-card-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+  }
+
+  .playbook-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .playbook-card li {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.55;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .playbook-card li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+    font-size: 11px;
+    top: 1px;
+  }
+
+  /* ── FOOTER ──────────────────────────────────────────── */
+  .report-footer {
+    background: var(--navy);
+    color: #6b8db8;
+    text-align: center;
+    padding: 18px 48px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    margin-top: 40px;
+  }
+
+  .report-footer span {
+    color: #9ab8da;
+  }
+
+  /* ── PRINT ───────────────────────────────────────────── */
+  @media print {
+    body { background: white; font-size: 11px; }
+    .report-body { padding: 20px 30px; }
+    .lead-table tbody tr:hover { background: inherit; }
+    .section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<header class="report-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="brand-eyebrow">Confidential · Sales Intelligence</div>
+      <div class="brand-title">Sails Software <span>—</span> Qualified Lead Intelligence Report</div>
+      <div class="brand-subtitle">High-Intent Accounts Across US, UK &amp; UAE · Prioritized by Urgency &amp; Service Alignment</div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-date">September 7, 2026</div>
+      <div class="meta-badge">Powered by Live B2B Data</div>
+      <div class="meta-stats">
+        <div class="stat-item">
+          <span class="stat-num">25</span>
+          <div class="stat-label">Accounts</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">15</span>
+          <div class="stat-label">Tier 1 Hot</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">6</span>
+          <div class="stat-label">Verticals</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">3</span>
+          <div class="stat-label">Markets</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════ BODY ═══════════════════════════ -->
+<div class="report-body">
+
+  <!-- Executive Summary -->
+  <div class="exec-summary">
+    <div class="summary-label">Executive Summary</div>
+    <div class="summary-text">
+      This report identifies <strong>25 high-intent accounts</strong> across US, UK, and UAE markets that exhibit strong urgency signals aligned with Sails Software's core service offerings in AI/ML, Cloud, Blockchain, and HR Technology. Leads are distributed across six verticals — FinTech, Pharma/Life Sciences, E-Commerce, HR/Recruiting, UK Digital Banking, and UAE Healthcare/Banking — and scored into <strong>Tier 1 (Hot)</strong> or <strong>Tier 2 (Warm)</strong> based on active digital transformation investment, hiring signals, and product launches. Immediate outreach priority should focus on the <strong>15 Tier 1 accounts</strong>, particularly Monzo Bank, EVERSANA, Upstart, Mashreq Bank, and Starling Bank, where Sails' offerings map directly to publicly announced technology initiatives.
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="tier-dot t1"></div>
+      <span class="legend-label">Tier 1 — Hot</span>
+      <span class="legend-desc">Immediate need; active vendor search or urgent scaling pressure</span>
+    </div>
+    <div class="legend-item">
+      <div class="tier-dot t2"></div>
+      <span class="legend-label">Tier 2 — Warm</span>
+      <span class="legend-desc">Active digital transformation; 60–180 day sales cycle</span>
+    </div>
+    <div class="legend-item">
+      <div class="tier-dot t3"></div>
+      <span class="legend-label">Tier 3 — Strategic</span>
+      <span class="legend-desc">Long-cycle; relationship-building phase</span>
+    </div>
+  </div>
+
+  <!-- ─── SECTION A: US FinTech ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-letter">A</div>
+      <div class="section-title">US FinTech &amp; Financial Services</div>
+      <div class="section-count">6 accounts</div>
+    </div>
+    <table class="lead-table">
+      <thead>
+        <tr>
+          <th style="width:170px">Company</th>
+          <th style="width:70px">Tier</th>
+          <th>Urgency Signal</th>
+          <th style="width:200px">Sails Match</th>
+          <th style="width:110px">LinkedIn</th>
+          <th style="width:155px">Key Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="company-name">Upstart <span class="company-ticker">UPST</span></div>
+            <div class="company-hq">San Mateo, CA</div>
+            <div class="company-headcount">1,899 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">90%+ fully automated loans; scaling AI infrastructure urgently; needs cloud-native ML pipeline support to maintain lending velocity and model accuracy.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Cloud Native</span><span class="tag">Data Analytics</span><span class="tag">DevOps/SRE</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/upstart-network" target="_blank" rel="noopener noreferrer">upstart-network</a></td>
+          <td><div class="contact-text">VP Engineering<br><span class="contact-title">Chief Data Officer</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Ramp</div>
+            <div class="company-hq">Miami, FL</div>
+            <div class="company-headcount">2,469 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">Forbes Cloud 100 + CNBC Disruptor 50; 70K+ business clients onboarded; urgent DevOps and cloud scaling need to sustain exponential growth trajectory.</div></td>
+          <td><div class="tags"><span class="tag">DevOps/SRE</span><span class="tag">Cloud Microservices</span><span class="tag">SaaS Dev</span><span class="tag">AI/ML</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/ramp" target="_blank" rel="noopener noreferrer">ramp</a></td>
+          <td><div class="contact-text">VP Engineering<br><span class="contact-title">Head of Infrastructure</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Better.com <span class="company-ticker">BETR</span></div>
+            <div class="company-hq">New York, NY</div>
+            <div class="company-headcount">2,062 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">First AI-native mortgage platform; launched Betsy™ voice AI in 2024; actively scaling AI engineering capabilities across origination and underwriting workflows.</div></td>
+          <td><div class="tags"><span class="tag">Agentic AI</span><span class="tag">GenAI</span><span class="tag">Cloud SaaS</span><span class="tag">Data Analytics</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/betterdotcom" target="_blank" rel="noopener noreferrer">betterdotcom</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP AI Engineering</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">EarnIn</div>
+            <div class="company-hq">Mountain View, CA</div>
+            <div class="company-headcount">600 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">3.8M customers, $15B+ processed; AI/data platform must scale with user growth; compliance and fraud analytics pressure intensifying with CFPB scrutiny.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Data Analytics</span><span class="tag">Cloud Native</span><span class="tag">Blockchain Security</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/earnin" target="_blank" rel="noopener noreferrer">earnin</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Data</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Gemini <span class="company-ticker">GEMI</span></div>
+            <div class="company-hq">New York, NY</div>
+            <div class="company-headcount">1,794 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">Blockchain + AI intersection is Sails' unique advantage; regulatory compliance, on-chain fraud reduction, and AML needs align directly with Sails' Blockchain &amp; Digital Security offering.</div></td>
+          <td><div class="tags"><span class="tag">Blockchain Security</span><span class="tag">AI/ML</span><span class="tag">Cloud Microservices</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/geminitrust" target="_blank" rel="noopener noreferrer">geminitrust</a></td>
+          <td><div class="contact-text">CISO<br><span class="contact-title">VP Engineering</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Chargebee</div>
+            <div class="company-hq">Rockville, MD</div>
+            <div class="company-headcount">1,297 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">"AI economy" pivot underway; building billing platform for AI-native products; needs AI/ML infrastructure and SaaS engineering partners to accelerate product roadmap.</div></td>
+          <td><div class="tags"><span class="tag">SaaS Development</span><span class="tag">AI/ML</span><span class="tag">Cloud Native</span><span class="tag">DevOps/SRE</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/chargebee" target="_blank" rel="noopener noreferrer">chargebee</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Product Engineering</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── SECTION B: US Pharma ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-letter">B</div>
+      <div class="section-title">US Pharma, Life Sciences &amp; Healthcare</div>
+      <div class="section-count">4 accounts</div>
+    </div>
+    <table class="lead-table">
+      <thead>
+        <tr>
+          <th style="width:170px">Company</th>
+          <th style="width:70px">Tier</th>
+          <th>Urgency Signal</th>
+          <th style="width:200px">Sails Match</th>
+          <th style="width:110px">LinkedIn</th>
+          <th style="width:155px">Key Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="company-name">EVERSANA</div>
+            <div class="company-hq">Chicago, IL</div>
+            <div class="company-headcount">4,836 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">Manages 650+ pharma clients; "AI-orchestrated experiences" across commercialization; urgent need for AI data platform, supply chain analytics, and compliant cloud infrastructure.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Data Analytics</span><span class="tag">Cloud Consulting</span><span class="tag">DevOps/SRE</span><span class="tag">Compliance</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/eversana" target="_blank" rel="noopener noreferrer">eversana</a></td>
+          <td>
+            <div class="contact-text">
+              <span class="contact-named">Tim Fisher, PhD</span>
+              <span class="contact-title">SVP Managing Director, Strategic Planning</span>
+              <br><a class="li-link" style="margin-top:5px; font-size:10px;" href="https://www.linkedin.com/in/tim-fisher-phd-061274a" target="_blank" rel="noopener noreferrer">View Profile</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Guardant Health</div>
+            <div class="company-hq">Palo Alto, CA</div>
+            <div class="company-headcount">4,627 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">"Real-world data and AI analytics" for cancer diagnostics; rapid international expansion across Singapore, Japan, India; cloud infrastructure and AI/ML engineering urgently required.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Data Analytics</span><span class="tag">Cloud Microservices</span><span class="tag">DevOps/SRE</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/guardanthealth" target="_blank" rel="noopener noreferrer">guardanthealth</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Engineering / Head of Data Science</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Precision Medicine Group</div>
+            <div class="company-hq">Bethesda, MD</div>
+            <div class="company-headcount">3,520 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">"Technology, data, and human expertise" — actively seeking digital transformation partners; complex clinical trial data needs an AI/analytics layer to accelerate research delivery.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Data Analytics</span><span class="tag">Cloud Consulting</span><span class="tag">SaaS Dev</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/precision-medicine-group" target="_blank" rel="noopener noreferrer">precision-medicine-group</a></td>
+          <td><div class="contact-text">CDO<br><span class="contact-title">VP Technology</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Alnylam Pharmaceuticals</div>
+            <div class="company-hq">Cambridge, MA</div>
+            <div class="company-headcount">2,854 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">6 approved medicines; global commercial expansion across 8 countries; needs scalable digital infrastructure and data systems for multi-market FDA/EMA regulatory compliance.</div></td>
+          <td><div class="tags"><span class="tag">Cloud Native</span><span class="tag">DevOps/SRE</span><span class="tag">Data Analytics</span><span class="tag">Compliance</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/alnylam-pharmaceuticals" target="_blank" rel="noopener noreferrer">alnylam-pharmaceuticals</a></td>
+          <td><div class="contact-text">CIO / VP IT<br><span class="contact-title">Head of Digital</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── SECTION C: E-Commerce ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-letter">C</div>
+      <div class="section-title">US E-Commerce &amp; Retail</div>
+      <div class="section-count">2 accounts</div>
+    </div>
+    <table class="lead-table">
+      <thead>
+        <tr>
+          <th style="width:170px">Company</th>
+          <th style="width:70px">Tier</th>
+          <th>Urgency Signal</th>
+          <th style="width:200px">Sails Match</th>
+          <th style="width:110px">LinkedIn</th>
+          <th style="width:155px">Key Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="company-name">Quince</div>
+            <div class="company-hq">San Francisco, CA</div>
+            <div class="company-headcount">1,993 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">"AI-driven demand forecasting, real-time production planning" is their core operating model; needs an AI engineering partner to accelerate supply chain intelligence and platform scalability.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Data Analytics</span><span class="tag">Cloud Native</span><span class="tag">SaaS Dev</span><span class="tag">DevOps/SRE</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/onequince" target="_blank" rel="noopener noreferrer">onequince</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Engineering / Head of AI/Data</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Rent the Runway</div>
+            <div class="company-hq">Brooklyn, NY</div>
+            <div class="company-headcount">867 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">Subscription + reverse logistics operation; AI-powered inventory optimization and cloud-native scaling needed to reduce operational costs and improve fulfillment accuracy.</div></td>
+          <td><div class="tags"><span class="tag">Cloud Microservices</span><span class="tag">AI/ML</span><span class="tag">SaaS Dev</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/rent-the-runway" target="_blank" rel="noopener noreferrer">rent-the-runway</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Product / VP Engineering</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── SECTION D: HR Tech ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-letter">D</div>
+      <div class="section-title">US HR Tech &amp; Recruiting — JobAlign + My Talent Cloud</div>
+      <div class="section-count">4 accounts</div>
+    </div>
+    <table class="lead-table">
+      <thead>
+        <tr>
+          <th style="width:170px">Company</th>
+          <th style="width:70px">Tier</th>
+          <th>Urgency Signal</th>
+          <th style="width:200px">Sails Match</th>
+          <th style="width:110px">LinkedIn</th>
+          <th style="width:155px">Key Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="company-name">Medasource</div>
+            <div class="company-hq">Indianapolis, IN</div>
+            <div class="company-headcount">997 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">1,900+ active consultants at 120+ healthcare clients; urgently needs AI-powered candidate matching and HCM platform to manage scale — direct product fit for JobAlign and My Talent Cloud.</div></td>
+          <td><div class="tags"><span class="tag product">JobAlign</span><span class="tag product">My Talent Cloud</span><span class="tag">AI/ML</span><span class="tag">Cloud SaaS</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/medasource" target="_blank" rel="noopener noreferrer">medasource</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">Head of Technology / VP Talent Ops</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Jobot</div>
+            <div class="company-hq">Newport Beach, CA</div>
+            <div class="company-headcount">1,921 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">Built on proprietary AI "Jax and Jeni"; became employee-owned 2024; actively investing in AI recruiting infrastructure — needs AI engineering support and enterprise HCM platform.</div></td>
+          <td><div class="tags"><span class="tag product">JobAlign</span><span class="tag product">My Talent Cloud</span><span class="tag">Agentic AI</span><span class="tag">AI/ML</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/jobot" target="_blank" rel="noopener noreferrer">jobot</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Technology / Head of AI</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">US Tech Solutions</div>
+            <div class="company-hq">Jersey City, NJ</div>
+            <div class="company-headcount">2,704 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">Largest private diversity staffing firm; building "next gen AI powered Talent platforms"; needs cloud and AI engineering to accelerate their proprietary platform roadmap.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">SaaS Dev</span><span class="tag product">JobAlign</span><span class="tag product">My Talent Cloud</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/us-tech-solutions" target="_blank" rel="noopener noreferrer">us-tech-solutions</a></td>
+          <td><div class="contact-text">CTO / VP Digital<br><span class="contact-title">Head of AI Platform</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Motion Recruitment</div>
+            <div class="company-hq">Boston, MA</div>
+            <div class="company-headcount">1,544 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">Offers "Digital Transformation" consulting including DevOps and DevSecOps; needs AI-powered platform capabilities to differentiate and win enterprise IT staffing contracts.</div></td>
+          <td><div class="tags"><span class="tag product">JobAlign</span><span class="tag product">My Talent Cloud</span><span class="tag">DevOps/SRE</span><span class="tag">Cloud Microservices</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/motion-recruitment-partners" target="_blank" rel="noopener noreferrer">motion-recruitment-partners</a></td>
+          <td><div class="contact-text">CTO / VP Technology<br><span class="contact-title">Director Digital Transformation</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── SECTION E: UK ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-letter">E</div>
+      <div class="section-title">UK FinTech &amp; Digital Banking</div>
+      <div class="section-count">5 accounts</div>
+    </div>
+    <table class="lead-table">
+      <thead>
+        <tr>
+          <th style="width:170px">Company</th>
+          <th style="width:70px">Tier</th>
+          <th>Urgency Signal</th>
+          <th style="width:200px">Sails Match</th>
+          <th style="width:110px">LinkedIn</th>
+          <th style="width:155px">Key Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="company-name">Monzo Bank</div>
+            <div class="company-hq">London, UK</div>
+            <div class="company-headcount">4,841 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">UK's leading digital bank with 5M+ accounts; rapid product expansion and global ambitions; needs AI/ML for personalization and fraud detection, and cloud infrastructure partners for scale.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Cloud Microservices</span><span class="tag">DevOps/SRE</span><span class="tag">Blockchain Security</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/monzo-bank" target="_blank" rel="noopener noreferrer">monzo-bank</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Engineering / Head of Data</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Starling Bank</div>
+            <div class="company-hq">London, UK</div>
+            <div class="company-headcount">2,903 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">Launching "Engine by Starling" — selling their SaaS banking platform to other banks; building cloud-native multi-tenant SaaS at scale; perfect fit for Sails SaaS Dev and DevOps capability.</div></td>
+          <td><div class="tags"><span class="tag">SaaS Dev (multi-tenant)</span><span class="tag">Cloud Native</span><span class="tag">DevOps/SRE</span><span class="tag">AI/ML</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/starlingbank" target="_blank" rel="noopener noreferrer">starlingbank</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Engineering / Head of Cloud</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Checkout.com</div>
+            <div class="company-hq">London, UK</div>
+            <div class="company-headcount">2,332 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">$300B+ payments processed in 2025; fraud detection and AI-driven risk analytics are critical engineering priorities; blockchain security for transaction immutability is an active need.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Blockchain Security</span><span class="tag">Cloud Native</span><span class="tag">Data Analytics</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/checkout" target="_blank" rel="noopener noreferrer">checkout</a></td>
+          <td><div class="contact-text">CISO / CTO<br><span class="contact-title">VP Engineering (Fraud &amp; Risk)</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Allica Bank</div>
+            <div class="company-hq">London, UK</div>
+            <div class="company-headcount">904 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">UK's #1 fastest-growing private company (Sunday Times 2024); fastest-growing fintech in 26-year Deloitte history; urgently scaling tech team — prime partner opportunity for cloud and AI engineering.</div></td>
+          <td><div class="tags"><span class="tag">Cloud Native</span><span class="tag">AI/ML</span><span class="tag">DevOps/SRE</span><span class="tag">SaaS Dev</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/allicabank" target="_blank" rel="noopener noreferrer">allicabank</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Engineering / Chief Product Officer</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Tide</div>
+            <div class="company-hq">London, UK</div>
+            <div class="company-headcount">3,308 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">1.6M+ members globally; expanding into India, Germany, France; needs cloud microservices and AI for multi-market SME banking at scale while maintaining per-country compliance.</div></td>
+          <td><div class="tags"><span class="tag">Cloud Microservices</span><span class="tag">AI/ML</span><span class="tag">DevOps/SRE</span><span class="tag">Data Analytics</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/tide-banking" target="_blank" rel="noopener noreferrer">tide-banking</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Engineering / Head of Platform</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── SECTION F: UAE ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-letter">F</div>
+      <div class="section-title">UAE &amp; Arab Markets</div>
+      <div class="section-count">5 accounts</div>
+    </div>
+    <table class="lead-table">
+      <thead>
+        <tr>
+          <th style="width:170px">Company</th>
+          <th style="width:70px">Tier</th>
+          <th>Urgency Signal</th>
+          <th style="width:200px">Sails Match</th>
+          <th style="width:110px">LinkedIn</th>
+          <th style="width:155px">Key Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="company-name">Mashreq Bank</div>
+            <div class="company-hq">Dubai, UAE</div>
+            <div class="company-headcount">8,620 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">55+ year old bank actively "thinking like a challenger, startup, and innovator"; aggressive digital transformation underway; needs AI/ML, Blockchain, and Cloud partners for next-gen digital banking products.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Blockchain Security</span><span class="tag">Cloud Consulting</span><span class="tag">DevOps/SRE</span><span class="tag">Data Analytics</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/mashreq-uae" target="_blank" rel="noopener noreferrer">mashreq-uae</a></td>
+          <td><div class="contact-text">CDO / CTO<br><span class="contact-title">Head of Digital Banking / VP IT</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Saudi German Health UAE</div>
+            <div class="company-hq">Dubai, UAE</div>
+            <div class="company-headcount">2,613 employees</div>
+          </td>
+          <td><span class="tier-badge t1">Hot</span></td>
+          <td><div class="urgency-text">Operating 3 hospitals + growing clinic network across UAE; needs digital health transformation, patient analytics platform, and cloud infrastructure to scale regionally under UAE Vision 2031.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML (patient analytics)</span><span class="tag">Cloud Native</span><span class="tag">Data Analytics</span><span class="tag">SaaS Dev</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/saudi-german-health-uae" target="_blank" rel="noopener noreferrer">saudi-german-health-uae</a></td>
+          <td><div class="contact-text">CIO / CDO<br><span class="contact-title">Head of Digital Transformation</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Burjeel Hospital</div>
+            <div class="company-hq">Abu Dhabi, UAE</div>
+            <div class="company-headcount">3,290 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">JCI-accredited tertiary hospital with 5 locations across UAE; needs AI-powered diagnostics support, cloud EMR, and data analytics platform for patient outcomes improvement and HAAD compliance.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Cloud Consulting</span><span class="tag">Data Analytics</span><span class="tag">SaaS Dev</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/burjeel-hospital" target="_blank" rel="noopener noreferrer">burjeel-hospital</a></td>
+          <td><div class="contact-text">CIO<br><span class="contact-title">VP Technology / Head of Digital Health</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Namshi.com</div>
+            <div class="company-hq">Dubai, UAE</div>
+            <div class="company-headcount">905 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">Middle East's largest online fashion hub (noon Group); needs AI demand forecasting, supply chain optimization, and scalable cloud infrastructure for continued regional expansion across GCC.</div></td>
+          <td><div class="tags"><span class="tag">AI/ML</span><span class="tag">Data Analytics</span><span class="tag">Cloud Microservices</span><span class="tag">SaaS Dev</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/namshi-com" target="_blank" rel="noopener noreferrer">namshi-com</a></td>
+          <td><div class="contact-text">CTO<br><span class="contact-title">VP Engineering / Head of Technology</span></div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">Juma Al Majid Holding</div>
+            <div class="company-hq">Dubai, UAE</div>
+            <div class="company-headcount">3,948 employees</div>
+          </td>
+          <td><span class="tier-badge t2">Warm</span></td>
+          <td><div class="urgency-text">Major conglomerate across 35+ companies in automotive, FMCG, retail, real estate; digital transformation at portfolio scale represents a large multi-year engagement opportunity for Sails.</div></td>
+          <td><div class="tags"><span class="tag">Cloud Consulting</span><span class="tag">AI/ML</span><span class="tag">Data Analytics</span><span class="tag">SaaS Dev</span></div></td>
+          <td><a class="li-link" href="https://www.linkedin.com/company/juma-al-majid-holding-group-llc" target="_blank" rel="noopener noreferrer">juma-al-majid-holding-group-llc</a></td>
+          <td><div class="contact-text">Group CIO / CTO<br><span class="contact-title">Head of Digital Transformation</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── OUTREACH PLAYBOOK ─── -->
+  <div class="playbook">
+    <div class="playbook-title">Outreach Playbook</div>
+    <div class="playbook-subtitle">Vertical-specific talking points for first-touch outreach — tailor to the contact's known priorities before sending.</div>
+    <div class="playbook-grid">
+
+      <div class="playbook-card">
+        <div class="playbook-card-title">FinTech &amp; Banking (US + UK + UAE)</div>
+        <ul>
+          <li>Sails' Agentic AI and Turnkey AI Solutions are pre-built for financial workflows — credit decisioning, compliance reporting, and fraud detection with transparent, auditable logic.</li>
+          <li>Our DevOps/SRE practice ensures 99.99% uptime and CI/CD pipelines that let your engineering teams ship 3× faster without sacrificing reliability.</li>
+          <li>Michigan-headquartered, US delivery model — no timezone friction, no offshore quality risk. We operate like an extension of your internal team.</li>
+        </ul>
+      </div>
+
+      <div class="playbook-card">
+        <div class="playbook-card-title">Pharma &amp; Life Sciences</div>
+        <ul>
+          <li>Sails Data Analytics connects clinical trial, manufacturing, and compliance data into a single analytics layer — reducing regulatory submission preparation time significantly.</li>
+          <li>HIPAA-compliant cloud architecture with immutable audit trails via blockchain — purpose-built for FDA and EMA compliance requirements.</li>
+          <li>Turnkey AI for supply chain optimization delivers predictive demand and distribution intelligence — accelerating your drug-to-market timeline.</li>
+        </ul>
+      </div>
+
+      <div class="playbook-card">
+        <div class="playbook-card-title">E-Commerce &amp; Retail</div>
+        <ul>
+          <li>Sails deploys AI demand forecasting and predictive inventory management that reduces overstock costs and stockout rates simultaneously — no tradeoff required.</li>
+          <li>Our SaaS multi-tenant architecture scales from 10K to 10M SKUs without re-platforming — built to grow with your catalog, not against it.</li>
+          <li>Cloud Native Microservices give your engineering teams independent ownership of services — accelerating feature releases and reducing deployment risk.</li>
+        </ul>
+      </div>
+
+      <div class="playbook-card">
+        <div class="playbook-card-title">HR Tech &amp; Recruiting</div>
+        <ul>
+          <li>JobAlign uses agentic AI to match candidates to roles in seconds — cutting your average time-to-fill by up to 60% without sacrificing match quality.</li>
+          <li>My Talent Cloud provides a unified HCM layer across your entire contractor and employee network with real-time workforce analytics and compliance tracking.</li>
+          <li>SpeechPundit AI enhances recruiter-to-candidate communication quality and coaching — measurably improving offer acceptance rates and candidate NPS.</li>
+        </ul>
+      </div>
+
+      <div class="playbook-card">
+        <div class="playbook-card-title">UAE &amp; Arab Markets</div>
+        <ul>
+          <li>Sails' Blockchain &amp; Digital Security offering aligns directly with the UAE National AI Strategy 2031 and DIFC FinTech regulatory requirements — positioning your organization as a compliance leader.</li>
+          <li>Active delivery operations and partnership networks across the GCC ensure culturally aligned delivery with Arabic-market expertise built in.</li>
+          <li>Our Generative AI and Agentic AI solutions are multilingual-ready — supporting Arabic-language healthcare, banking, and e-commerce applications out of the box.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /report-body -->
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer class="report-footer">
+  <span>Sails Software Inc. · sailssoftware.com · +1-248-750-6252</span>
+  &nbsp;·&nbsp;
+  Generated September 7, 2026 via live B2B data enrichment
+  &nbsp;·&nbsp;
+  <span>Confidential — For Internal Sales Use Only</span>
+</footer>
+
+</body>
+</html>
